@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLookup.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BusinessLookup.Controllers
 {
@@ -94,6 +95,15 @@ namespace BusinessLookup.Controllers
       }
 
       return query.ToList();
+    }
+
+    // GET api/businesses/ranndom
+    [HttpGet("random")]
+    public ActionResult<Business> Random()
+    {
+      Random rand = new Random();
+      int toSkip = rand.Next(0, _db.Businesses.Count());
+      return _db.Businesses.OrderBy(entry => Guid.NewGuid()).Skip(toSkip).Take(1).First();
     }
   }
 }
