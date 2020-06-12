@@ -6,39 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLookup.Controllers
 {
-  [Route("api/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/1.0/businesses")]
   [ApiController]
-  public class BusinessesController : ControllerBase
+  public class BusinessesV1Controller : ControllerBase
   {
     private BusinessLookupContext _db;
 
-    public BusinessesController(BusinessLookupContext db)
+    public BusinessesV1Controller(BusinessLookupContext db)
     {
       _db = db;
     }
 
     // GET api/businesses
     [HttpGet]
-    public ActionResult<IEnumerable<Business>> Get(string name, string category, string city)
+    public ActionResult<IEnumerable<Business>> Get()
     {
-      var query = _db.Businesses.AsQueryable();
-
-      if (name != null)
-      {
-        query = query.Where(entry => entry.Name == name);
-      }
-
-      if (category != null)
-      {
-        query = query.Where(entry => entry.Category == category);
-      }
-
-      if (city != null)
-      {
-        query = query.Where(entry => entry.Address.Contains(city));
-      }
-
-      return query.ToList();
+      return _db.Businesses.ToList();
     }
 
     // GET api/businesses/1
@@ -72,6 +56,44 @@ namespace BusinessLookup.Controllers
       var business = _db.Businesses.FirstOrDefault(entry => entry.BusinessId == id);
       _db.Businesses.Remove(business);
       _db.SaveChanges();
+    }
+  }
+
+  [ApiVersion("2.0")]
+  [Route("api/2.0/businesses")]
+  [ApiController]
+  public class BusinessesV2Controller : ControllerBase
+  {
+
+    private BusinessLookupContext _db;
+
+    public BusinessesV2Controller(BusinessLookupContext db)
+    {
+      _db = db;
+    }
+
+    // GET api/businesses
+    [HttpGet]
+    public ActionResult<IEnumerable<Business>> Get(string name, string category, string city)
+    {
+      var query = _db.Businesses.AsQueryable();
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+
+      if (category != null)
+      {
+        query = query.Where(entry => entry.Category == category);
+      }
+
+      if (city != null)
+      {
+        query = query.Where(entry => entry.Address.Contains(city));
+      }
+
+      return query.ToList();
     }
   }
 }
