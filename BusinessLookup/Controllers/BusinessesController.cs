@@ -24,6 +24,13 @@ namespace BusinessLookup.Controllers
       return _db.Businesses.ToList();
     }
 
+    // GET api/businesses/1
+    [HttpGet("{id}")]
+    public ActionResult<Business> Get(int id)
+    {
+      return _db.Businesses.FirstOrDefault(entry => entry.BusinessId == id);
+    }
+
     // POST api/businesses
     [HttpPost]
     public void Post([FromBody] Business business)
