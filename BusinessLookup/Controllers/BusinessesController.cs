@@ -15,5 +15,12 @@ namespace BusinessLookup.Controllers
     {
       _db = db;
     }
+
+    // GET api/businesses
+    [HttpGet]
+    public ActionResult<IEnumerable<Business>> Get()
+    {
+      return _db.Businesses.ToList();
+    }
   }
 }
