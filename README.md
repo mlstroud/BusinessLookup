@@ -39,6 +39,19 @@ Once, you have followed the setup instructions below, visit the following URL to
 | /api/2.0/businesses/random              | GET               | Returns random business.       |
 | /api/2.0/businesses/search              | GET               | Returns business with name containing search string.     |
 
+### Version Details
+---
+As you may have noticed, version 2.0 does not contain all of the endpoints that version 1.0 does.  
+Please take care when submitting your API calls that you are using the correct version for the call you are making.  
+Attempting to use the wrong version will result in a failed call.  
+For example:  
+> ...api/1.0/businesses/random  
+
+Will result in a **400 Bad Request** error.  
+> ...api/2.0/businesses/3  
+
+Will result in a **404 Not Found** error.
+
 ### Querying
 ---
 Version 2.0 supports querying for the default GET route.  
