@@ -19,21 +19,21 @@ namespace BusinessLookup.Controllers
       _db = db;
     }
 
-    // GET api/businesses
+    // GET api/1.0/businesses
     [HttpGet]
     public ActionResult<IEnumerable<Business>> Get()
     {
       return _db.Businesses.ToList();
     }
 
-    // GET api/businesses/1
+    // GET api/1.0/businesses/1
     [HttpGet("{id}")]
     public ActionResult<Business> Get(int id)
     {
       return _db.Businesses.FirstOrDefault(entry => entry.BusinessId == id);
     }
 
-    // POST api/businesses
+    // POST api/1.0/businesses
     [HttpPost]
     public void Post([FromBody] Business business)
     {
@@ -41,7 +41,7 @@ namespace BusinessLookup.Controllers
       _db.SaveChanges();
     }
 
-    // PUT api/businesses/1
+    // PUT api/1.0/businesses/1
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] Business business)
     {
@@ -50,7 +50,7 @@ namespace BusinessLookup.Controllers
       _db.SaveChanges();
     }
 
-    // DELETE api/businesses/1
+    // DELETE api/1.0/businesses/1
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
@@ -73,7 +73,7 @@ namespace BusinessLookup.Controllers
       _db = db;
     }
 
-    // GET api/businesses
+    // GET api/2.0/businesses
     [HttpGet]
     public ActionResult<IEnumerable<Business>> Get(string name, string category, string city)
     {
@@ -97,13 +97,27 @@ namespace BusinessLookup.Controllers
       return query.ToList();
     }
 
-    // GET api/businesses/ranndom
+    // GET api/2.0/businesses/ranndom
     [HttpGet("random")]
     public ActionResult<Business> Random()
     {
       Random rand = new Random();
       int toSkip = rand.Next(0, _db.Businesses.Count());
       return _db.Businesses.OrderBy(entry => Guid.NewGuid()).Skip(toSkip).Take(1).First();
+    }
+
+    // GET api/2.0/businesses/searcch
+    [HttpGet("search")]
+    public ActionResult<IEnumerable<Business>> Search(string name)
+    {
+      var query = _db.Businesses.AsQueryable();
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name.Contains(name));
+      }
+
+      return query.ToList();
     }
   }
 }
