@@ -6,6 +6,6 @@ namespace BusinessLookup.Models
   {
     public BusinessLookupContext(DbContextOptions<BusinessLookupContext> options) : base(options) { }
 
-    public DbSet<Business> Businesses;
+    public DbSet<Business> Businesses { get; set; }
   }
 }
