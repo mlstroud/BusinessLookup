@@ -19,9 +19,26 @@ namespace BusinessLookup.Controllers
 
     // GET api/businesses
     [HttpGet]
-    public ActionResult<IEnumerable<Business>> Get()
+    public ActionResult<IEnumerable<Business>> Get(string name, string category, string city)
     {
-      return _db.Businesses.ToList();
+      var query = _db.Businesses.AsQueryable();
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+
+      if (category != null)
+      {
+        query = query.Where(entry => entry.Category == category);
+      }
+
+      if (city != null)
+      {
+        query = query.Where(entry => entry.Address.Contains(city));
+      }
+
+      return query.ToList();
     }
 
     // GET api/businesses/1
