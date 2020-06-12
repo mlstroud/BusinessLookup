@@ -22,5 +22,13 @@ namespace BusinessLookup.Controllers
     {
       return _db.Businesses.ToList();
     }
+
+    // POST api/businesses
+    [HttpPost]
+    public void Post([FromBody] Business business)
+    {
+      _db.Businesses.Add(business);
+      _db.SaveChanges();
+    }
   }
 }
