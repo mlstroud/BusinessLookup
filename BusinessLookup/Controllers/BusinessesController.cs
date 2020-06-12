@@ -38,5 +38,14 @@ namespace BusinessLookup.Controllers
       _db.Businesses.Add(business);
       _db.SaveChanges();
     }
+
+    // PUT api/businesses/1
+    [HttpPut("{id}")]
+    public void Put(int id, [FromBody] Business business)
+    {
+      business.BusinessId = id;
+      _db.Entry(business).State = EntityState.Modified;
+      _db.SaveChanges();
+    }
   }
 }
