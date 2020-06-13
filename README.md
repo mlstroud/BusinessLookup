@@ -154,6 +154,7 @@ dotnet run
 ## Known Bugs
 ---
 * V 2.0 GET route when queried by city has the potential to return incorect information. City is part of the address and query returns businesses where address contains the queried city name.
+* Due to a bug with versioning on netcore 2.2, I was unable to get dynamic url version routing to work properly("/api/{v:apiVersion}/[controller]). Current workdaround was to hard code the version paths depending on API version.
 
 ## Stretch Goals
 ---
